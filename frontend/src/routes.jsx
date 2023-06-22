@@ -3,6 +3,7 @@ import App from './App'
 import ErrorPage from './pages/ErrorPage'
 import HomePage from './pages/HomePage'
 import MoviesPage from './pages/MoviesPage'
+import MoviePage from './pages/MoviePage'
 import GenresPage from './pages/GenresPage'
 import EditMovie from './pages/EditMovie'
 import ManageCataloguePage from './pages/ManageCataloguePage'
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
 			{
 				path: 'movies',
 				element: <MoviesPage />,
+			},
+			{
+				path: 'movies/:id',
+				element: <MoviePage />,
 			},
 			{
 				path: 'genres',
