@@ -6,7 +6,7 @@ const LoginPage = () => {
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 
-	const { setJwtToken, setAlertClassName, setAlertMessage } =
+	const { setJwtToken, setAlertClassName, setAlertMessage, toggleRefresh } =
 		useOutletContext()
 
 	const navigate = useNavigate()
@@ -39,6 +39,7 @@ const LoginPage = () => {
 					setJwtToken(data.access_token)
 					setAlertClassName('d-none')
 					setAlertMessage('')
+					toggleRefresh(true)
 					navigate('/')
 				}
 			})

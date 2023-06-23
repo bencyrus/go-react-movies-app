@@ -43,8 +43,8 @@ const MoviesPage = () => {
 									{movie.title}
 								</Link>
 							</td>
-							<td>{movie.release_date}</td>
-							<td>{movie.mpaa_rating}</td>
+							<td>{movie.releaseDate}</td>
+							<td>{movie.mpaaRating}</td>
 						</tr>
 					))}
 				</tbody>

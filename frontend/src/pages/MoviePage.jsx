@@ -23,8 +23,8 @@ const MoviePage = () => {
 			<h2>Movie: {movie.title}</h2>
 			<small>
 				<em>
-					{movie.release_date}, {movie.runtime} minutes, Rated{' '}
-					{movie.mpaa_rating}
+					{movie.releaseDate}, {movie.runtime} minutes, Rated{' '}
+					{movie.mpaaRating}
 				</em>
 			</small>
 			<hr />

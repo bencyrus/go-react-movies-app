@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 import Alert from './components/Alert'
 
@@ -7,12 +7,54 @@ function App() {
 	const [alertMessage, setAlertMessage] = useState('')
 	const [alertClassName, setAlertClassName] = useState('d-none')
 
+	const [tickInterval, setTickInterval] = useState()
+
 	const navigate = useNavigate()
 
 	const logOut = () => {
-		setJwtToken('')
+		const options = {
+			method: 'GET',
+			credentials: 'include',
+		}
+
+		fetch('http://localhost:7070/logout', options)
+			.catch((error) => console.error('Error logging out', error))
+			.finally(() => {
+				setJwtToken('')
+				toggleRefresh(false)
+			})
+
 		navigate('/login')
 	}
+
+	const toggleRefresh = useCallback(
+		(status) => {
+			if (status) {
+				let i = setInterval(() => {
+					const options = {
+						method: 'GET',
+						credentials: 'include',
+					}
+
+					fetch('http://localhost:7070/refresh', options)
+						.then((response) => response.json())
+						.then((data) => {
+							if (data.token) {
+								setJwtToken(data.token)
+							}
+						})
+						.catch((error) =>
+							console.error('User is not logged in')
+						)
+				}, 600000)
+				setTickInterval(i)
+			} else {
+				setTickInterval(null)
+				clearInterval(tickInterval)
+			}
+		},
+		[tickInterval]
+	)
 
 	useEffect(() => {
 		if (jwtToken === '') {
@@ -24,13 +66,14 @@ function App() {
 			fetch('http://localhost:7070/refresh', options)
 				.then((response) => response.json())
 				.then((data) => {
-					if (data.access_token) {
-						setJwtToken(data.access_token)
+					if (data.token) {
+						setJwtToken(data.token)
+						toggleRefresh(true)
 					}
 				})
 				.catch((error) => console.error('User is not logged in', error))
 		}
-	}, [jwtToken])
+	}, [jwtToken, toggleRefresh])
 
 	return (
 		<div className='App container'>
@@ -75,17 +118,17 @@ function App() {
 							<>
 								<Link
 									className='list-group-item list-group-item-action'
-									to='/add-movie'>
+									to='/admin/movies/:id'>
 									Add Movie
 								</Link>
 								<Link
 									className='list-group-item list-group-item-action'
-									to='/manage-catalogue'>
+									to='/admin/manage-catalogue'>
 									Manage Catalogue
 								</Link>
 								<Link
 									className='list-group-item list-group-item-action'
-									to='/graphQL'>
+									to='/admin/graphQL'>
 									GraphQL
 								</Link>
 							</>
@@ -100,6 +143,7 @@ function App() {
 							setJwtToken,
 							setAlertMessage,
 							setAlertClassName,
+							toggleRefresh,
 						}}
 					/>
 				</div>

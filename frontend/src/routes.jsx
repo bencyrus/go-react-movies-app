@@ -33,10 +33,6 @@ const router = createBrowserRouter([
 				element: <GenresPage />,
 			},
 			{
-				path: 'graphQL',
-				element: <GrapthQLPage />,
-			},
-			{
 				path: 'login',
 				element: <LoginPage />,
 			},
@@ -54,6 +50,10 @@ const router = createBrowserRouter([
 			{
 				path: 'manage-catalogue',
 				element: <ManageCataloguePage />,
+			},
+			{
+				path: 'graphQL',
+				element: <GrapthQLPage />,
 			},
 		],
 	},

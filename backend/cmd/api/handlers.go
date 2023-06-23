@@ -3,7 +3,6 @@ package main
 import (
 	"errors"
 	"fmt"
-	"log"
 	"net/http"
 	"strconv"
 
@@ -72,7 +71,6 @@ func (app *application) authenticate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	log.Println(tokens.Token)
 	refreshCookie := app.auth.GetRefreshCookie(tokens.RefreshToken)
 	http.SetCookie(w, refreshCookie)
 
@@ -123,4 +121,20 @@ func (app *application) refreshToken(w http.ResponseWriter, r *http.Request) {
 			app.writeJSON(w, http.StatusAccepted, tokenPairs)
 		}
 	}
+}
+
+// logout handler handles the logout functionality
+func (app *application) logout(w http.ResponseWriter, r *http.Request) {
+	http.SetCookie(w, app.auth.GetExpiredRefreshCookie())
+	w.WriteHeader(http.StatusAccepted)
+}
+
+func (app *application) MovieCatalogue(w http.ResponseWriter, r *http.Request) {
+	movies, err := app.DB.AllMovies()
+	if err != nil {
+		app.errorJSON(w, fmt.Errorf("cannot fetch movies: %w", err))
+		return
+	}
+
+	_ = app.writeJSON(w, http.StatusOK, movies)
 }
