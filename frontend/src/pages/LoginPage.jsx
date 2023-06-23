@@ -14,17 +14,38 @@ const LoginPage = () => {
 	const handleSubmit = (e) => {
 		e.preventDefault()
 
-		console.log('email/password', email, password)
-
-		if (email === 'admin@example.com' && password === 'password') {
-			setJwtToken('abc')
-			setAlertClassName('d-none')
-			setAlertMessage('')
-			navigate('/')
-		} else {
-			setAlertClassName('alert-danger')
-			setAlertMessage('Invalid Credentials')
+		let payload = {
+			email: email,
+			password: password,
 		}
+
+		const options = {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			credentials: 'include',
+			body: JSON.stringify(payload),
+		}
+
+		fetch('http://localhost:7070/authenticate', options)
+			.then((response) => response.json())
+			.then((data) => {
+				if (data.error) {
+					setAlertClassName('alert alert-danger')
+					setAlertMessage(data.message)
+					console.log('error')
+				} else {
+					setJwtToken(data.access_token)
+					setAlertClassName('d-none')
+					setAlertMessage('')
+					navigate('/')
+				}
+			})
+			.catch((error) => {
+				setAlertClassName('alert alert-danger')
+				setAlertMessage(error.message)
+			})
 	}
 
 	return (
