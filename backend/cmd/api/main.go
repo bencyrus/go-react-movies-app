@@ -7,14 +7,20 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"time"
 )
 
 const port = 7070
 
 type application struct {
-	DSN    string
-	Domain string
-	DB     repository.DatabaseRepo
+	DSN          string
+	Domain       string
+	DB           repository.DatabaseRepo
+	auth         Auth
+	JWTSecret    string
+	JWTIssuer    string
+	JWTAudience  string
+	CookieDomain string
 }
 
 func main() {
@@ -23,6 +29,11 @@ func main() {
 
 	// Read from command line
 	flag.StringVar(&app.DSN, "dsn", "host=localhost port=5432 user=postgres password=postgres dbname=movies sslmode=disable timezone=UTC connect_timeout=5", "PostgreSQL Connection String")
+	flag.StringVar(&app.JWTSecret, "jwt-secret", "verysecret", "signing secret")
+	flag.StringVar(&app.JWTIssuer, "jwt-issuer", "example.com", "signing issuer")
+	flag.StringVar(&app.JWTAudience, "jwt-audience", "example.com", "signing audience")
+	flag.StringVar(&app.CookieDomain, "cookie-domain", "localhost", "cookie domain")
+	flag.StringVar(&app.Domain, "domain", "example.com", "domain")
 	flag.Parse()
 
 	// Connect to database
@@ -34,7 +45,16 @@ func main() {
 
 	defer app.DB.Connection().Close()
 
-	app.Domain = "example.com"
+	app.auth = Auth{
+		Issuer:             app.JWTIssuer,
+		Audience:           app.JWTAudience,
+		Secret:             app.JWTSecret,
+		TokenExpiry:        time.Minute * 15,
+		RefreshTokenExpiry: time.Hour * 24,
+		CookiePath:         "/",
+		CookieDomain:       app.CookieDomain,
+		CookieName:         "__Host-refresh_token",
+	}
 
 	// Start HTTP server
 	log.Println("Starting server on port:", port)
