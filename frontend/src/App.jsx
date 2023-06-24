@@ -118,7 +118,7 @@ function App() {
 							<>
 								<Link
 									className='list-group-item list-group-item-action'
-									to='/admin/edit-movie'>
+									to='/admin/movies/0'>
 									Add Movie
 								</Link>
 								<Link

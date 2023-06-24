@@ -10,6 +10,12 @@ type DatabaseRepo interface {
 	Connection() *sql.DB
 	// AllMovies returns all movies
 	AllMovies() ([]*models.Movie, error)
+	// OneMovie returns one movie by id
+	OneMovie(id int) (*models.Movie, error)
+	// OneMovieForEdit returns one movie for editing by id
+	OneMovieForEdit(id int) (*models.Movie, []*models.Genre, error)
+	// AllGenres returns all genres
+	AllGenres() ([]*models.Genre, error)
 	// GetUserByEmail returns a user by email address
 	GetUserByEmail(email string) (*models.User, error)
 	// GetUserByID returns a user by id

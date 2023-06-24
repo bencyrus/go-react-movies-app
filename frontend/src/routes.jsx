@@ -44,7 +44,11 @@ const router = createBrowserRouter([
 		errorElement: <ErrorPage />,
 		children: [
 			{
-				path: 'edit-movie',
+				path: 'movies/0',
+				element: <EditMovie />,
+			},
+			{
+				path: 'movies/:id',
 				element: <EditMovie />,
 			},
 			{

@@ -32,18 +32,108 @@ const EditMovie = () => {
 		MPAARating: '',
 		runtime: '',
 		description: '',
+		genres: [],
+		genresArray: [Array(13).fill(false)],
 	})
 
 	let { id } = useParams()
+	if (id === undefined) {
+		id = 0
+	}
+
 	useEffect(() => {
 		if (jwtToken === null) {
 			navigate('/login')
+			return
+		}
+
+		if (id === 0) {
+			setMovie({
+				id: 0,
+				title: '',
+				releaseDate: '',
+				MPAARating: '',
+				runtime: '',
+				description: '',
+				genres: [],
+				genresArray: [Array(13).fill(false)],
+			})
+
+			const headers = new Headers()
+			headers.append('Content-Type', 'application/json')
+
+			const options = {
+				method: 'GET',
+				headers: headers,
+			}
+
+			fetch(`http://localhost:7070/genres`, options)
+				.then((response) => response.json())
+				.then((data) => {
+					const checks = []
+					data.forEach((g) => {
+						checks.push({
+							id: g.id,
+							checked: false,
+							genre: g.genre,
+						})
+					})
+
+					setMovie((m) => ({
+						...m,
+						genres: checks,
+						genresArray: [],
+					}))
+				})
+				.catch((error) => console.log(error))
+		} else {
 			return
 		}
 	}, [jwtToken, navigate])
 
 	const handleSubmit = (e) => {
 		e.preventDefault()
+
+		let errors = []
+		let requiredFields = [
+			{
+				field: movie.title,
+				name: 'title',
+			},
+			{
+				field: movie.releaseDate,
+				name: 'releaseDate',
+			},
+			{
+				field: movie.MPAARating,
+				name: 'MPAARating',
+			},
+			{
+				field: movie.runtime,
+				name: 'runtime',
+			},
+			{
+				field: movie.description,
+				name: 'description',
+			},
+		]
+
+		requiredFields.forEach((obj) => {
+			if (obj.field === '') {
+				errors.push(obj.name)
+			}
+		})
+
+		if (movie.genresArray.length === 0) {
+			alert('Please select at least one genre')
+			errors.push('genres')
+		}
+
+		setErrors(errors)
+
+		if (errors.length > 0) {
+			return false
+		}
 	}
 
 	const handleChange = () => (e) => {
@@ -52,11 +142,28 @@ const EditMovie = () => {
 		setMovie({ ...movie, [name]: value })
 	}
 
+	const handleCheck = (e, position) => {
+		let tmpArray = movie.genres
+		tmpArray[position].checked = !tmpArray[position].checked
+
+		let tmpIDs = movie.genresArray
+		if (!e.target.checked) {
+			tmpIDs.splice(position, 1)
+		} else {
+			tmpIDs.push(parseInt(e.target.value, 10))
+		}
+
+		setMovie({
+			...movie,
+			genresArray: tmpIDs,
+		})
+	}
+
 	return (
 		<div>
 			<h2>Add/Edit Movie</h2>
 			<hr />
-			<pre>{JSON.stringify(movie, null, 3)}</pre>
+			{/* <pre>{JSON.stringify(movie, null, 3)}</pre> */}
 			<form onSubmit={handleSubmit}>
 				<input type='hidden' id='id' name='id' value={movie.id} />
 
@@ -119,6 +226,40 @@ const EditMovie = () => {
 					}
 					errorMessage={'Please enter a description'}
 				/>
+
+				<hr />
+
+				<h3>Genres</h3>
+
+				{movie.genres && movie.genres.length > 0 && (
+					<>
+						{Array.from(movie.genres).map((g, idx) => (
+							<CheckBox
+								key={idx}
+								className='form-check-input'
+								label={g.genre}
+								name={g.genre}
+								checked={movie.genres[idx].checked}
+								onChange={(e) => handleCheck(e, idx)}
+								value={g.id}
+								errorDiv={
+									hasError('genres')
+										? 'text-danger'
+										: 'd-none'
+								}
+								errorMessage={
+									'Please select at least one genre'
+								}
+							/>
+						))}
+					</>
+				)}
+
+				<hr />
+
+				<button type='submit' className='btn btn-primary'>
+					Save
+				</button>
 			</form>
 		</div>
 	)

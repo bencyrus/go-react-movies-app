@@ -11,7 +11,7 @@ const CheckBox = (props) => {
 				onChange={props.onChange}
 			/>
 			<label className='form-check-label' htmlFor={props.name}>
-				{props.title}
+				{props.label}
 			</label>
 		</div>
 	)

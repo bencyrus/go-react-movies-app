@@ -6,17 +6,30 @@ const MoviePage = () => {
 	let { id } = useParams()
 
 	useEffect(() => {
-		let myMovie = {
-			id: 1,
-			title: 'The Shawshank Redemption',
-			release_date: '1994-09-14',
-			runtime: 144,
-			mpaa_rating: 'R',
-			description:
-				'Shawshank Redemption is a prison drama based on a Stephen King story, starring Tim Robbins and Morgan Freeman.',
+		const headers = new Headers()
+		headers.append('Content-Type', 'application/json')
+
+		const options = {
+			method: 'GET',
+			headers: headers,
 		}
-		setMovie(myMovie)
+
+		fetch(`http://localhost:7070/movies/${id}`, options)
+			.then((response) => response.json())
+			.then((data) => {
+				setMovie(data)
+			})
+			.catch((error) => console.log(error))
 	}, [id])
+
+	if (movie.genres) {
+		movie.genres = Object.values(movie.genres)
+	} else {
+		movie.genres = []
+	}
+
+	console.log('movie')
+	console.log(movie)
 
 	return (
 		<div>
@@ -27,7 +40,21 @@ const MoviePage = () => {
 					{movie.mpaaRating}
 				</em>
 			</small>
+			<br />
+			{movie.genres.map((g) => (
+				<span key={g.genre} className='badge bg-secondary me-2'>
+					{g.genre}
+				</span>
+			))}
 			<hr />
+			{movie.imageURL && (
+				<div className='mb-3'>
+					<img
+						src={`https://image.tmdb.org/t/p/w200${movie.imageURL}`}
+						alt={movie.title}
+					/>
+				</div>
+			)}
 			<p>{movie.description}</p>
 		</div>
 	)
