@@ -134,6 +134,41 @@ const EditMovie = () => {
 		if (errors.length > 0) {
 			return false
 		}
+
+		const headers = new Headers()
+		headers.append('Content-Type', 'application/json')
+		headers.append('Authorization', `Bearer ${jwtToken}`)
+
+		let method = 'PUT'
+
+		if (movie.id > 0) {
+			method = 'PATCH'
+		}
+
+		const body = movie
+
+		body.releaseDate = new Date(body.releaseDate)
+		body.runtime = parseInt(body.runtime, 10)
+
+		const options = {
+			method: method,
+			headers: headers,
+			body: JSON.stringify(body),
+			credentials: 'include',
+		}
+
+		console.log(movie)
+
+		fetch(`http://localhost:7070/admin/movies/${movie.id}`, options)
+			.then((response) => response.json())
+			.then((data) => {
+				if (data.error) {
+					console.log(data.error)
+				} else {
+					navigate('/admin/manage-catalogue')
+				}
+			})
+			.catch((error) => console.log(error))
 	}
 
 	const handleChange = () => (e) => {

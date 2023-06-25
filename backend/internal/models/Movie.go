@@ -13,7 +13,7 @@ type Movie struct {
 	CreatedAt   time.Time `json:"-"`
 	UpdatedAt   time.Time `json:"-"`
 	Genres      []*Genre  `json:"genres,omitempty"`
-	GenresArray []int     `json:"-"`
+	GenresArray []int     `json:"genresArray,omitempty"`
 }
 
 type Genre struct {

@@ -16,6 +16,10 @@ type DatabaseRepo interface {
 	OneMovieForEdit(id int) (*models.Movie, []*models.Genre, error)
 	// AllGenres returns all genres
 	AllGenres() ([]*models.Genre, error)
+	// InsertMovie inserts a movie
+	InsertMovie(movie models.Movie) (int, error)
+	// UpdateMovieGenres updates movie genres
+	UpdateMovieGenres(id int, genreIDs []int) error
 	// GetUserByEmail returns a user by email address
 	GetUserByEmail(email string) (*models.User, error)
 	// GetUserByID returns a user by id
