@@ -178,6 +178,69 @@ func (app *application) getPoster(movie models.Movie) models.Movie {
 	return movie
 }
 
+func (app *application) UpdateMovie(w http.ResponseWriter, r *http.Request) {
+	var payload models.Movie
+
+	err := app.readJSON(w, r, &payload)
+	if err != nil {
+		app.errorJSON(w, err)
+		return
+	}
+
+	movie, err := app.DB.OneMovie(payload.ID)
+	if err != nil {
+		app.errorJSON(w, err)
+		return
+	}
+
+	movie.Title = payload.Title
+	movie.ReleaseDate = payload.ReleaseDate
+	movie.Runtime = payload.Runtime
+	movie.Description = payload.Description
+	movie.MPAARating = payload.MPAARating
+	movie.UpdatedAt = time.Now()
+
+	err = app.DB.UpdateMovie(*movie)
+	if err != nil {
+		app.errorJSON(w, err)
+		return
+	}
+
+	err = app.DB.UpdateMovieGenres(movie.ID, payload.GenresArray)
+	if err != nil {
+		app.errorJSON(w, err)
+		return
+	}
+
+	response := JSONResponse{
+		Error:   false,
+		Message: "Movie updated successfully",
+	}
+
+	app.writeJSON(w, http.StatusOK, response)
+}
+
+func (app *application) DeleteMovie(w http.ResponseWriter, r *http.Request) {
+	id, err := strconv.Atoi(chi.URLParam(r, "id"))
+	if err != nil {
+		app.errorJSON(w, err)
+		return
+	}
+
+	err = app.DB.DeleteMovie(id)
+	if err != nil {
+		app.errorJSON(w, err)
+		return
+	}
+
+	response := JSONResponse{
+		Error:   false,
+		Message: "Movie deleted successfully",
+	}
+
+	app.writeJSON(w, http.StatusOK, response)
+}
+
 func (app *application) authenticate(w http.ResponseWriter, r *http.Request) {
 	var requestPayload struct {
 		Email    string `json:"email"`

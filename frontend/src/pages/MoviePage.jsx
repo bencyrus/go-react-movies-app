@@ -28,9 +28,6 @@ const MoviePage = () => {
 		movie.genres = []
 	}
 
-	console.log('movie')
-	console.log(movie)
-
 	return (
 		<div>
 			<h2>Movie: {movie.title}</h2>

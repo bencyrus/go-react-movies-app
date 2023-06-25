@@ -18,8 +18,12 @@ type DatabaseRepo interface {
 	AllGenres() ([]*models.Genre, error)
 	// InsertMovie inserts a movie
 	InsertMovie(movie models.Movie) (int, error)
+	// UpdateMovie updates a movie
+	UpdateMovie(movie models.Movie) error
 	// UpdateMovieGenres updates movie genres
 	UpdateMovieGenres(id int, genreIDs []int) error
+	// DeleteMovie deletes a movie
+	DeleteMovie(id int) error
 	// GetUserByEmail returns a user by email address
 	GetUserByEmail(email string) (*models.User, error)
 	// GetUserByID returns a user by id
