@@ -46,7 +46,7 @@ const ManageCataloguePage = () => {
 					{movies.map((movie) => (
 						<tr key={movie.id}>
 							<td>
-								<Link to={`admin/movies/${movie.id}`}>
+								<Link to={`/admin/movies/${movie.id}`}>
 									{movie.title}
 								</Link>
 							</td>
