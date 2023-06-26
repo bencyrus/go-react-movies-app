@@ -9,6 +9,7 @@ import EditMovie from './pages/EditMovie'
 import ManageCataloguePage from './pages/ManageCataloguePage'
 import GrapthQLPage from './pages/GrapthQLPage'
 import LoginPage from './pages/LoginPage'
+import OneGenre from './pages/OneGenre'
 
 const router = createBrowserRouter([
 	{
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
 			{
 				path: 'genres',
 				element: <GenresPage />,
+			},
+			{
+				path: 'genre/:id',
+				element: <OneGenre />,
 			},
 			{
 				path: 'login',

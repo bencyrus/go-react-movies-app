@@ -9,7 +9,7 @@ type DatabaseRepo interface {
 	// DBConnection returns a database connection
 	Connection() *sql.DB
 	// AllMovies returns all movies
-	AllMovies() ([]*models.Movie, error)
+	AllMovies(genre ...int) ([]*models.Movie, error)
 	// OneMovie returns one movie by id
 	OneMovie(id int) (*models.Movie, error)
 	// OneMovieForEdit returns one movie for editing by id

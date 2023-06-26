@@ -42,6 +42,23 @@ func (app *application) AllMovies(w http.ResponseWriter, r *http.Request) {
 	_ = app.writeJSON(w, http.StatusOK, movies)
 }
 
+// AllMoviesByGenre handler handles the all movies by genre page
+func (app *application) AllMoviesByGenre(w http.ResponseWriter, r *http.Request) {
+	genreID, err := strconv.Atoi(chi.URLParam(r, "id"))
+	if err != nil {
+		app.errorJSON(w, err)
+		return
+	}
+
+	movies, err := app.DB.AllMovies(genreID)
+	if err != nil {
+		app.errorJSON(w, err)
+		return
+	}
+
+	app.writeJSON(w, http.StatusOK, movies)
+}
+
 func (app *application) GetMovie(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 	movieID, err := strconv.Atoi(id)
