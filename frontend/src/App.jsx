@@ -114,6 +114,11 @@ function App() {
 							to='/genres'>
 							Genres
 						</Link>
+						<Link
+							className='list-group-item list-group-item-action'
+							to='/graphQL'>
+							GraphQL
+						</Link>
 						{jwtToken !== '' && (
 							<>
 								<Link
@@ -125,11 +130,6 @@ function App() {
 									className='list-group-item list-group-item-action'
 									to='/admin/manage-catalogue'>
 									Manage Catalogue
-								</Link>
-								<Link
-									className='list-group-item list-group-item-action'
-									to='/admin/graphQL'>
-									GraphQL
 								</Link>
 							</>
 						)}

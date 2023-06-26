@@ -7,7 +7,7 @@ import MoviePage from './pages/MoviePage'
 import GenresPage from './pages/GenresPage'
 import EditMovie from './pages/EditMovie'
 import ManageCataloguePage from './pages/ManageCataloguePage'
-import GrapthQLPage from './pages/GrapthQLPage'
+import GraphQLPage from './pages/GraphQLPage'
 import LoginPage from './pages/LoginPage'
 import OneGenre from './pages/OneGenre'
 
@@ -41,6 +41,10 @@ const router = createBrowserRouter([
 				path: 'login',
 				element: <LoginPage />,
 			},
+			{
+				path: 'graphQL',
+				element: <GraphQLPage />,
+			},
 		],
 	},
 	{
@@ -59,10 +63,6 @@ const router = createBrowserRouter([
 			{
 				path: 'manage-catalogue',
 				element: <ManageCataloguePage />,
-			},
-			{
-				path: 'graphQL',
-				element: <GrapthQLPage />,
 			},
 		],
 	},
