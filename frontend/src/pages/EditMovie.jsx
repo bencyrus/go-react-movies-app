@@ -67,7 +67,7 @@ const EditMovie = () => {
 				headers: headers,
 			}
 
-			fetch(`/genres`, options)
+			fetch(`${process.env.REACT_APP_BACKEND_URL}/genres`, options)
 				.then((response) => response.json())
 				.then((data) => {
 					const checks = []
@@ -96,7 +96,10 @@ const EditMovie = () => {
 				headers: headers,
 			}
 
-			fetch(`/admin/movies/${id}`, options)
+			fetch(
+				`${process.env.REACT_APP_BACKEND_URL}/admin/movies/${id}`,
+				options
+			)
 				.then((response) => {
 					if (response.status !== 200) {
 						setError('Error retrieving movie: ' + response.status)
@@ -202,7 +205,10 @@ const EditMovie = () => {
 			credentials: 'include',
 		}
 
-		fetch(`/admin/movies/${movie.id}`, options)
+		fetch(
+			`${process.env.REACT_APP_BACKEND_URL}/admin/movies/${movie.id}`,
+			options
+		)
 			.then((response) => response.json())
 			.then((data) => {
 				if (data.error) {
@@ -259,7 +265,10 @@ const EditMovie = () => {
 			credentials: 'include',
 		}
 
-		fetch(`/admin/movies/${id}`, options)
+		fetch(
+			`${process.env.REACT_APP_BACKEND_URL}/admin/movies/${id}`,
+			options
+		)
 			.then((response) => response.json())
 			.then((data) => {
 				if (data.error) {

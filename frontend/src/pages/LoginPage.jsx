@@ -28,7 +28,7 @@ const LoginPage = () => {
 			body: JSON.stringify(payload),
 		}
 
-		fetch('/authenticate', options)
+		fetch(`${process.env.REACT_APP_BACKEND_URL}/authenticate`, options)
 			.then((response) => response.json())
 			.then((data) => {
 				if (data.error) {

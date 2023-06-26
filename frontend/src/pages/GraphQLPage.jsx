@@ -28,7 +28,7 @@ const GraphQLPage = () => {
 			body: payload,
 		}
 
-		fetch('graph', options)
+		fetch(`${process.env.REACT_APP_BACKEND_URL}/graph`, options)
 			.then((response) => response.json())
 			.then((data) => {
 				if (data.error) {
@@ -74,7 +74,7 @@ const GraphQLPage = () => {
 			body: payload,
 		}
 
-		fetch('/graph', options)
+		fetch(`${process.env.REACT_APP_BACKEND_URL}/graph`, options)
 			.then((response) => response.json())
 			.then((data) => {
 				if (data.error) {

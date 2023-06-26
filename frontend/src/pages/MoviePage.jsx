@@ -14,7 +14,7 @@ const MoviePage = () => {
 			headers: headers,
 		}
 
-		fetch(`/movies/${id}`, options)
+		fetch(`${process.env.REACT_APP_BACKEND_URL}/movies/${id}`, options)
 			.then((response) => response.json())
 			.then((data) => {
 				setMovie(data)

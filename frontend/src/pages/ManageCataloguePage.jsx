@@ -20,7 +20,7 @@ const ManageCataloguePage = () => {
 			headers: headers,
 		}
 
-		fetch(`/admin/movies`, options)
+		fetch(`${process.env.REACT_APP_BACKEND_URL}/admin/movies`, options)
 			.then((response) => response.json())
 			.then((data) => {
 				setMovies(data)

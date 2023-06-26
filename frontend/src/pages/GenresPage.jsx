@@ -14,7 +14,7 @@ const GenresPage = () => {
 			headers: headers,
 		}
 
-		fetch('/genres', options)
+		fetch(`${process.env.REACT_APP_BACKEND_URL}/genres`, options)
 			.then((response) => response.json())
 			.then((data) => {
 				if (data.error) {
