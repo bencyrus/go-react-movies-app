@@ -67,7 +67,7 @@ const EditMovie = () => {
 				headers: headers,
 			}
 
-			fetch(`http://localhost:7070/genres`, options)
+			fetch(`/genres`, options)
 				.then((response) => response.json())
 				.then((data) => {
 					const checks = []
@@ -96,7 +96,7 @@ const EditMovie = () => {
 				headers: headers,
 			}
 
-			fetch(`http://localhost:7070/admin/movies/${id}`, options)
+			fetch(`/admin/movies/${id}`, options)
 				.then((response) => {
 					if (response.status !== 200) {
 						setError('Error retrieving movie: ' + response.status)
@@ -202,7 +202,7 @@ const EditMovie = () => {
 			credentials: 'include',
 		}
 
-		fetch(`http://localhost:7070/admin/movies/${movie.id}`, options)
+		fetch(`/admin/movies/${movie.id}`, options)
 			.then((response) => response.json())
 			.then((data) => {
 				if (data.error) {
@@ -259,7 +259,7 @@ const EditMovie = () => {
 			credentials: 'include',
 		}
 
-		fetch(`http://localhost:7070/admin/movies/${id}`, options)
+		fetch(`/admin/movies/${id}`, options)
 			.then((response) => response.json())
 			.then((data) => {
 				if (data.error) {

@@ -17,7 +17,7 @@ function App() {
 			credentials: 'include',
 		}
 
-		fetch('http://localhost:7070/logout', options)
+		fetch('/logout', options)
 			.catch((error) => console.error('Error logging out', error))
 			.finally(() => {
 				setJwtToken('')
@@ -36,7 +36,7 @@ function App() {
 						credentials: 'include',
 					}
 
-					fetch('http://localhost:7070/refresh', options)
+					fetch('/refresh', options)
 						.then((response) => response.json())
 						.then((data) => {
 							if (data.token) {
@@ -63,7 +63,7 @@ function App() {
 				credentials: 'include',
 			}
 
-			fetch('http://localhost:7070/refresh', options)
+			fetch('/refresh', options)
 				.then((response) => response.json())
 				.then((data) => {
 					if (data.token) {

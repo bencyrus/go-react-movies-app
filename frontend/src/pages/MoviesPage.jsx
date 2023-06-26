@@ -13,7 +13,7 @@ const MoviesPage = () => {
 			headers: headers,
 		}
 
-		fetch(`http://localhost:7070/movies`, options)
+		fetch(`/movies`, options)
 			.then((response) => response.json())
 			.then((data) => {
 				setMovies(data)

@@ -19,7 +19,7 @@ const OneGenre = () => {
 			headers: headers,
 		}
 
-		fetch(`http://localhost:7070/movies/genres/${id}`, options)
+		fetch(`/movies/genres/${id}`, options)
 			.then((response) => response.json())
 			.then((data) => {
 				if (data.error) {
@@ -49,7 +49,7 @@ const OneGenre = () => {
 						{movies.map((movie) => (
 							<tr key={movie.id}>
 								<td>
-									<Link to={`/movie/${movie.id}`}>
+									<Link to={`/movies/${movie.id}`}>
 										{movie.title}
 									</Link>
 								</td>

@@ -14,7 +14,7 @@ const GenresPage = () => {
 			headers: headers,
 		}
 
-		fetch('http://localhost:7070/genres', options)
+		fetch('/genres', options)
 			.then((response) => response.json())
 			.then((data) => {
 				if (data.error) {

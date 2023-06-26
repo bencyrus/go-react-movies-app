@@ -20,7 +20,7 @@ const ManageCataloguePage = () => {
 			headers: headers,
 		}
 
-		fetch(`http://localhost:7070/admin/movies`, options)
+		fetch(`/admin/movies`, options)
 			.then((response) => response.json())
 			.then((data) => {
 				setMovies(data)

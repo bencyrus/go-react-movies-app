@@ -28,7 +28,7 @@ const GraphQLPage = () => {
 			body: payload,
 		}
 
-		fetch('http://localhost:7070/graph', options)
+		fetch('graph', options)
 			.then((response) => response.json())
 			.then((data) => {
 				if (data.error) {
@@ -74,7 +74,7 @@ const GraphQLPage = () => {
 			body: payload,
 		}
 
-		fetch('http://localhost:7070/graph', options)
+		fetch('/graph', options)
 			.then((response) => response.json())
 			.then((data) => {
 				if (data.error) {

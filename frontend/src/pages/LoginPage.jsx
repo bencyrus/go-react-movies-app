@@ -28,7 +28,7 @@ const LoginPage = () => {
 			body: JSON.stringify(payload),
 		}
 
-		fetch('http://localhost:7070/authenticate', options)
+		fetch('/authenticate', options)
 			.then((response) => response.json())
 			.then((data) => {
 				if (data.error) {
