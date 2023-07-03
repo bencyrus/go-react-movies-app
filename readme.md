@@ -4,7 +4,7 @@ This repository is a full-stack application for a movie repository where users c
 
 ## Architecture
 
-The application is split into a backend and a frontend. The backend is a REST API written in Go and the frontend is built with React, where routing is also handled. 
+The application is split into a backend and a frontend. The backend is a REST API written in Go and the frontend is built with React, where routing is also handled using react-router-dom v6. 
 
 ## Backend
 
